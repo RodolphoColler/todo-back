@@ -9,4 +9,13 @@ async function create(todo) {
   }
 }
 
-module.exports = { create };
+async function getAll() {
+  try {
+    const todos = await Model.getAll();
+    return { code: 201, result: todos };
+  } catch (error) {
+    return { error, code: 400 };
+  }
+}
+
+module.exports = { create, getAll };

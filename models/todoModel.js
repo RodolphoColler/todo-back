@@ -8,4 +8,12 @@ async function create(todo) {
   return data;
 }
 
-module.exports = { create };
+async function getAll() {
+  const { data, error } = await supabase.from('Todos').select('id, todo, finished');
+
+  if (error) throw new Error(error);
+
+  return data;
+}
+
+module.exports = { create, getAll };

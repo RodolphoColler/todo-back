@@ -9,4 +9,12 @@ async function create(req, res) {
   return res.status(code).json(result);
 }
 
-module.exports = { create };
+async function getAll(_req, res) {
+  const { code, result, error } = await Service.getAll();
+
+  if (error) return res.status(code).json({ message: error });
+
+  return res.status(code).json(result);
+}
+
+module.exports = { create, getAll };

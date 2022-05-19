@@ -1,3 +1,3 @@
-const { create } = require('./todoController');
+const { create, getAll } = require('./todoController');
 
-module.exports = { create };
+module.exports = { create, getAll };
