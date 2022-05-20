@@ -1,19 +1,28 @@
 const supabase = require('./supabase');
 
-async function create(todo) {
-  const { data, error } = await supabase.from('Todos').insert([{ todo }]);
+const queries = {
+  async insert(todo) {
+    return supabase.from('Todos').insert([{ todo }]);
+  },
+  async getAll() {
+    return supabase.from('Todos').select('id, todo, finished');
+  },
+};
 
-  if (error) throw new Error(error);
+async function create(todo) {
+  const { data, error } = await queries.insert(todo);
+
+  if (error) throw new Error(error.message);
 
   return data;
 }
 
 async function getAll() {
-  const { data, error } = await supabase.from('Todos').select('id, todo, finished');
+  const { data, error } = await queries.getAll();
 
-  if (error) throw new Error(error);
+  if (error) throw new Error(error.message);
 
   return data;
 }
 
-module.exports = { create, getAll };
+module.exports = { create, getAll, queries };
