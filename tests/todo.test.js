@@ -77,7 +77,7 @@ describe('test todo route', () => {
       queries.getAll.restore();
     });
 
-    it('when everything goes well', async () => {
+    it('when database returns an error', async () => {
       const supabaseMock = {
         error: { message: 'error when insert' },
       };
@@ -91,6 +91,51 @@ describe('test todo route', () => {
       expect(body).to.be.deep.equal(supabaseMock.error);
       expect(status).to.be.equal(500);
       queries.getAll.restore();
+    });
+  });
+
+  describe('test todo delete method', () => {
+    it('when everything goes well', async () => {
+      const supabaseMock = {
+        data: [
+          {
+            id: 1,
+            todo: 'my todo to do',
+            finished: false,
+          },
+        ],
+      };
+
+      const id = 1;
+
+      sinon.stub(queries, 'deleteTodo').resolves(supabaseMock);
+
+      const { body, status } = await chai
+        .request(app)
+        .delete('/todo')
+        .send({ id });
+
+      expect(body).to.be.deep.equal(supabaseMock.data);
+      expect(status).to.be.equal(200);
+      queries.deleteTodo.restore();
+    });
+    it('when database returns an error', async () => {
+      const supabaseMock = {
+        error: { message: 'error when insert' },
+      };
+
+      const id = 1;
+
+      sinon.stub(queries, 'deleteTodo').resolves(supabaseMock);
+
+      const { body, status } = await chai
+        .request(app)
+        .delete('/todo')
+        .send({ id });
+
+      expect(body).to.be.deep.equal(supabaseMock.error);
+      expect(status).to.be.equal(500);
+      queries.deleteTodo.restore();
     });
   });
 });
