@@ -13,3 +13,5 @@ app.use('/todo', route.todo);
 app.listen(3001, () => {
   console.log(`Escutando na porta ${3001}`);
 });
+
+module.exports = app;
