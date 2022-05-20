@@ -7,6 +7,9 @@ const queries = {
   async getAll() {
     return supabase.from('Todos').select('id, todo, finished');
   },
+  async deleteTodo(id) {
+    return supabase.from('Todos').delete().match({ id });
+  },
 };
 
 async function create(todo) {
@@ -25,4 +28,14 @@ async function getAll() {
   return data;
 }
 
-module.exports = { create, getAll, queries };
+async function deleteTodo(id) {
+  const { data, error } = await queries.deleteTodo(id);
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
+module.exports = {
+  create, getAll, queries, deleteTodo,
+};

@@ -1,3 +1,3 @@
-const { create, getAll } = require('./todoModel');
+const { create, getAll, deleteTodo } = require('./todoModel');
 
-module.exports = { create, getAll };
+module.exports = { create, getAll, deleteTodo };

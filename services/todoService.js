@@ -18,4 +18,13 @@ async function getAll() {
   }
 }
 
-module.exports = { create, getAll };
+async function deleteTodo(id) {
+  try {
+    const deletedTodo = await Model.deleteTodo(id);
+    return { code: 200, result: deletedTodo };
+  } catch (error) {
+    return { error: error.message, code: 500 };
+  }
+}
+
+module.exports = { create, getAll, deleteTodo };

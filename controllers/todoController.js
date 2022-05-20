@@ -18,4 +18,14 @@ async function getAll(_req, res) {
   return res.status(code).json(result);
 }
 
-module.exports = { create, getAll };
+async function deleteTodo(req, res) {
+  const { id } = req.body;
+
+  const { code, result, error } = await Service.deleteTodo(id);
+
+  if (error) return res.status(code).json({ message: error });
+
+  return res.status(code).json(result);
+}
+
+module.exports = { create, getAll, deleteTodo };
